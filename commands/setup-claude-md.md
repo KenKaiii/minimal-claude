@@ -1,5 +1,5 @@
 ---
-name: setup-guidelines
+name: setup-claude-md
 description: Generate a minimal CLAUDE.md with project-specific code quality guidelines
 ---
 

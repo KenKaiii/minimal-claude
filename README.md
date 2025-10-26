@@ -10,7 +10,7 @@ minimal-claude/
 │   └── plugin.json          # Plugin manifest (required)
 ├── commands/                # Slash commands
 │   ├── setup.md            # Smart project setup command
-│   ├── setup-guidelines.md # Generate CLAUDE.md guidelines
+│   ├── setup-claude-md.md  # Generate CLAUDE.md guidelines
 │   └── example.md
 ├── agents/                  # Subagents
 │   └── example-agent.md
@@ -46,9 +46,9 @@ After running setup, use the generated command:
 
 This will automatically fix all linting and type errors in your project using parallel agents!
 
-## Featured Command: `/setup-guidelines`
+## Featured Command: `/setup-claude-md`
 
-The `/setup-guidelines` command creates a minimal, non-bloated `CLAUDE.md` file with zero-tolerance code quality guidelines:
+The `/setup-claude-md` command creates a minimal, non-bloated `CLAUDE.md` file with zero-tolerance code quality guidelines:
 
 1. **Detects Project Type**: Identifies your project and its tooling
 2. **Extracts Exact Commands**: Finds the actual lint/typecheck commands from your config
@@ -61,7 +61,7 @@ The `/setup-guidelines` command creates a minimal, non-bloated `CLAUDE.md` file 
 ### Usage
 
 ```bash
-/setup-guidelines
+/setup-claude-md
 ```
 
 This creates a `CLAUDE.md` file that tells Claude to automatically run your linting and typechecking commands after every edit, fixing all issues immediately.
