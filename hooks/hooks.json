@@ -1,0 +1,11 @@
+{
+  "PostToolUse": {
+    "command": "echo 'Tool used'"
+  },
+  "UserPromptSubmit": {
+    "command": "echo 'User submitted prompt'"
+  },
+  "SessionStart": {
+    "command": "echo 'Session started'"
+  }
+}

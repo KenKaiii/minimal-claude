@@ -1,0 +1,8 @@
+{
+  "name": "minimal-claude",
+  "description": "Intelligent project setup that auto-configures linting, typechecking, and parallel agent-based fixing",
+  "version": "1.0.0",
+  "author": {
+    "name": "kenkai"
+  }
+}
