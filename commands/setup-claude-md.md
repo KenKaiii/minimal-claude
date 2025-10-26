@@ -3,235 +3,109 @@ name: setup-claude-md
 description: Generate a minimal CLAUDE.md with project-specific code quality guidelines
 ---
 
-You are creating a minimal CLAUDE.md file that enforces zero-tolerance code quality standards.
+Generate a minimal CLAUDE.md file that enforces zero-tolerance code quality.
 
-## Step 1: Detect Project Type and Tools
+## Step 1: Detect Project Type
 
-Check for these files to determine the project type and available tools:
-- `package.json` → JavaScript/TypeScript (check scripts for lint, typecheck commands)
-- `pyproject.toml` or `requirements.txt` → Python (check for mypy, pylint, black, ruff)
-- `go.mod` → Go (go vet, gofmt, staticcheck)
-- `Cargo.toml` → Rust (cargo clippy, cargo fmt)
-- `composer.json` → PHP (phpcs, psalm)
-- `build.gradle` or `pom.xml` → Java (checkstyle, spotbugs)
+Check for config files to determine project type:
+- `package.json` → JavaScript/TypeScript
+- `pyproject.toml` or `requirements.txt` → Python
+- `go.mod` → Go
+- `Cargo.toml` → Rust
 
-**Read the config file** to extract the exact commands used for:
-- Linting
-- Type checking
-- Formatting
+Read the config file to find the exact linting and typechecking commands.
 
-## Step 2: Generate CLAUDE.md
+## Step 2: Extract Commands
 
-Create a file at `CLAUDE.md` in the project root with this structure:
+**For JavaScript/TypeScript**: Check `package.json` scripts for `lint`, `typecheck`, `type-check`, or `tsc`
 
-```markdown
-# Code Quality Guidelines
+**For Python**: Look for `mypy`, `pylint`, `black`, `ruff` in dependencies
 
-**Zero-tolerance policy**: All code must pass linting and type checking before completion.
+**For Go**: Use `go vet ./...`, `gofmt -l .`
 
-## After Every Edit
+**For Rust**: Use `cargo clippy`, `cargo fmt --check`
 
-After writing, editing, or updating ANY file, you MUST:
+## Step 3: Generate CLAUDE.md
 
-1. Run the following commands:
-   [INSERT PROJECT-SPECIFIC COMMANDS]
-
-2. Fix ALL errors and warnings immediately
-3. Re-run checks until zero errors/warnings remain
-4. Only then consider the task complete
-
-## Commands
-
-[INSERT SPECIFIC COMMANDS WITH EXAMPLES]
-
-## Rules
-
-- Never skip type checking or linting
-- Never commit code with errors or warnings
-- Fix issues immediately after they appear
-- Run checks after EVERY file modification
-```
-
-### For JavaScript/TypeScript Projects
-
-Extract commands from `package.json` scripts and generate:
+Create `CLAUDE.md` in the project root with this EXACT format:
 
 ```markdown
-# Code Quality Guidelines
+# Code Quality - Zero Tolerance
 
-**Zero-tolerance policy**: All code must pass linting and type checking before completion.
+After editing ANY file, run:
 
-## After Every Edit
-
-After writing, editing, or updating ANY file, you MUST:
-
-1. Run these commands:
-   ```bash
-   npm run lint          # or: yarn lint / pnpm lint
-   npm run typecheck     # or: tsc --noEmit
-   ```
-
-2. Fix ALL errors and warnings immediately
-3. Re-run checks until zero errors/warnings remain
-4. Only then consider the task complete
-
-## Commands
-
-**Linting**: `npm run lint` or `eslint .`
-**Type Checking**: `npm run typecheck` or `tsc --noEmit`
-**Auto-fix**: `npm run lint -- --fix` (if available)
-
-## Rules
-
-- Never skip type checking or linting
-- Never commit code with errors or warnings
-- Fix issues immediately after they appear
-- Run checks after EVERY file modification
+```bash
+[EXACT COMMANDS FROM PROJECT]
 ```
 
-### For Python Projects
+Fix ALL errors/warnings before continuing.
+```
 
+**That's it. Keep it under 10 lines.**
+
+### Examples:
+
+**JavaScript/TypeScript**:
 ```markdown
-# Code Quality Guidelines
+# Code Quality - Zero Tolerance
 
-**Zero-tolerance policy**: All code must pass linting and type checking before completion.
+After editing ANY file, run:
 
-## After Every Edit
-
-After writing, editing, or updating ANY file, you MUST:
-
-1. Run these commands:
-   ```bash
-   mypy .
-   pylint src/
-   black --check .
-   ```
-
-2. Fix ALL errors and warnings immediately
-3. Re-run checks until zero errors/warnings remain
-4. Only then consider the task complete
-
-## Commands
-
-**Type Checking**: `mypy .`
-**Linting**: `pylint src/` or `ruff check .`
-**Formatting**: `black .` or `ruff format .`
-
-## Rules
-
-- Never skip type checking or linting
-- Never commit code with errors or warnings
-- Fix issues immediately after they appear
-- Run checks after EVERY file modification
+```bash
+npm run lint
+npm run typecheck
 ```
 
-### For Go Projects
+Fix ALL errors/warnings before continuing.
+```
 
+**Python**:
 ```markdown
-# Code Quality Guidelines
+# Code Quality - Zero Tolerance
 
-**Zero-tolerance policy**: All code must pass linting and type checking before completion.
+After editing ANY file, run:
 
-## After Every Edit
-
-After writing, editing, or updating ANY file, you MUST:
-
-1. Run these commands:
-   ```bash
-   go vet ./...
-   gofmt -l .
-   staticcheck ./...
-   ```
-
-2. Fix ALL errors and warnings immediately
-3. Re-run checks until zero errors/warnings remain
-4. Only then consider the task complete
-
-## Commands
-
-**Vetting**: `go vet ./...`
-**Formatting**: `gofmt -w .`
-**Linting**: `staticcheck ./...`
-
-## Rules
-
-- Never skip type checking or linting
-- Never commit code with errors or warnings
-- Fix issues immediately after they appear
-- Run checks after EVERY file modification
+```bash
+mypy .
+pylint src/
 ```
 
-### For Rust Projects
+Fix ALL errors/warnings before continuing.
+```
 
+**Go**:
 ```markdown
-# Code Quality Guidelines
+# Code Quality - Zero Tolerance
 
-**Zero-tolerance policy**: All code must pass linting and type checking before completion.
+After editing ANY file, run:
 
-## After Every Edit
-
-After writing, editing, or updating ANY file, you MUST:
-
-1. Run these commands:
-   ```bash
-   cargo clippy -- -D warnings
-   cargo fmt -- --check
-   cargo test
-   ```
-
-2. Fix ALL errors and warnings immediately
-3. Re-run checks until zero errors/warnings remain
-4. Only then consider the task complete
-
-## Commands
-
-**Linting**: `cargo clippy -- -D warnings`
-**Formatting**: `cargo fmt`
-**Type Checking**: `cargo check`
-
-## Rules
-
-- Never skip type checking or linting
-- Never commit code with errors or warnings
-- Fix issues immediately after they appear
-- Run checks after EVERY file modification
+```bash
+go vet ./...
+gofmt -l .
 ```
 
-## Step 3: Customize Based on Available Scripts
-
-**Important**: Only include commands that actually exist in the project.
-
-- For JS/TS: Check `package.json` scripts section for exact command names
-- For Python: Check if tools are installed in dependencies
-- For Go/Rust: Include standard toolchain commands
-
-**Keep it minimal**: Only include the essential commands. No fluff.
-
-## Step 4: Confirm Completion
-
-After creating `CLAUDE.md`, inform the user:
-
-1. ✅ CLAUDE.md created in project root
-2. 📋 Commands included: [list the specific commands]
-3. 🎯 Zero-tolerance policy active
-4. 💡 This file will be automatically loaded in future Claude Code sessions
-
-**Example output**:
-```
-✅ CLAUDE.md created successfully!
-
-Commands configured:
-  • npm run lint
-  • npm run typecheck
-
-Zero-tolerance policy is now active. After every file edit,
-these commands will be run and all errors must be fixed immediately.
+Fix ALL errors/warnings before continuing.
 ```
 
-## Important Notes
+**Rust**:
+```markdown
+# Code Quality - Zero Tolerance
 
-- Keep CLAUDE.md under 100 lines
-- Use exact commands from their project (don't invent new ones)
-- Make it action-oriented, not explanatory
-- Focus on the workflow: edit → check → fix → verify
-- No boilerplate or fluff
+After editing ANY file, run:
+
+```bash
+cargo clippy
+cargo fmt --check
+```
+
+Fix ALL errors/warnings before continuing.
+```
+
+## Step 4: Confirm
+
+Tell the user:
+- ✅ CLAUDE.md created
+- 📋 Commands: [list them]
+- 🎯 Zero-tolerance active
+
+**Keep it minimal. No fluff. Just the essential enforcement.**
