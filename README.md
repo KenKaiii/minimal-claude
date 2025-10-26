@@ -9,8 +9,9 @@ minimal-claude/
 ├── .claude-plugin/
 │   └── plugin.json          # Plugin manifest (required)
 ├── commands/                # Slash commands
-│   ├── setup-code-quality.md # Smart project setup command
+│   ├── setup-code-quality.md # Generate /fix command
 │   ├── setup-claude-md.md    # Generate CLAUDE.md guidelines
+│   ├── setup-commits.md      # Generate /commit command
 │   └── example.md
 ├── agents/                  # Subagents
 │   └── example-agent.md
@@ -87,6 +88,41 @@ After writing, editing, or updating ANY file, you MUST:
 ```
 
 **Minimal, actionable, effective.**
+
+## Featured Command: `/setup-commits`
+
+The `/setup-commits` command creates a `/commit` command that enforces quality checks before committing:
+
+1. **Detects Project Type**: Identifies your project's linting/typechecking tools
+2. **Runs Quality Checks**: Executes all checks before allowing commits
+3. **Generates Smart Commit Messages**: AI-powered, human-readable commit messages
+4. **Auto-push**: Automatically pushes to remote after committing
+
+### Usage
+
+```bash
+/setup-commits
+```
+
+This creates a `/commit` command that:
+1. Runs `npm run lint` and `npm run typecheck` (or your project's equivalent)
+2. Only proceeds if all checks pass (zero tolerance)
+3. Analyzes your changes
+4. Generates a clear commit message like "Add user authentication with JWT"
+5. Commits and pushes automatically
+
+**Example workflow**:
+```bash
+# Make changes to your code
+# Then run:
+/commit
+
+# Claude will:
+# ✓ Run all quality checks
+# ✓ Generate commit message
+# ✓ Commit changes
+# ✓ Push to remote
+```
 
 ## Plugin Components
 
