@@ -10,6 +10,7 @@ minimal-claude/
 │   └── plugin.json          # Plugin manifest (required)
 ├── commands/                # Slash commands
 │   ├── setup.md            # Smart project setup command
+│   ├── setup-guidelines.md # Generate CLAUDE.md guidelines
 │   └── example.md
 ├── agents/                  # Subagents
 │   └── example-agent.md
@@ -44,6 +45,48 @@ After running setup, use the generated command:
 ```
 
 This will automatically fix all linting and type errors in your project using parallel agents!
+
+## Featured Command: `/setup-guidelines`
+
+The `/setup-guidelines` command creates a minimal, non-bloated `CLAUDE.md` file with zero-tolerance code quality guidelines:
+
+1. **Detects Project Type**: Identifies your project and its tooling
+2. **Extracts Exact Commands**: Finds the actual lint/typecheck commands from your config
+3. **Generates CLAUDE.md**: Creates a minimal guidelines file (under 100 lines) that:
+   - Enforces running checks after EVERY file edit
+   - Implements zero-tolerance for errors/warnings
+   - Uses your project's specific commands
+   - Gets automatically injected into Claude's prompt
+
+### Usage
+
+```bash
+/setup-guidelines
+```
+
+This creates a `CLAUDE.md` file that tells Claude to automatically run your linting and typechecking commands after every edit, fixing all issues immediately.
+
+**Example generated CLAUDE.md** (for a TypeScript project):
+```markdown
+# Code Quality Guidelines
+
+**Zero-tolerance policy**: All code must pass linting and type checking.
+
+## After Every Edit
+
+After writing, editing, or updating ANY file, you MUST:
+
+1. Run these commands:
+   ```bash
+   npm run lint
+   npm run typecheck
+   ```
+
+2. Fix ALL errors and warnings immediately
+3. Re-run checks until zero errors/warnings remain
+```
+
+**Minimal, actionable, effective.**
 
 ## Plugin Components
 
