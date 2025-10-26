@@ -9,8 +9,8 @@ minimal-claude/
 ├── .claude-plugin/
 │   └── plugin.json          # Plugin manifest (required)
 ├── commands/                # Slash commands
-│   ├── setup.md            # Smart project setup command
-│   ├── setup-claude-md.md  # Generate CLAUDE.md guidelines
+│   ├── setup-code-quality.md # Smart project setup command
+│   ├── setup-claude-md.md    # Generate CLAUDE.md guidelines
 │   └── example.md
 ├── agents/                  # Subagents
 │   └── example-agent.md
@@ -20,14 +20,14 @@ minimal-claude/
     └── hooks.json
 ```
 
-## Featured Command: `/setup`
+## Featured Command: `/setup-code-quality`
 
-The `/setup` command intelligently detects your project type and configures automated code quality checks:
+The `/setup-code-quality` command intelligently detects your project type and configures automated code quality checks:
 
 1. **Detects Project Type**: Automatically identifies if you're using JavaScript/TypeScript, Python, Go, Rust, PHP, or Java
 2. **Checks Existing Tools**: Verifies which linting and typechecking tools are already installed
 3. **Installs Missing Tools**: Only installs what's needed (eslint, prettier, mypy, clippy, etc.)
-4. **Generates `/check` Command**: Creates a custom `/check` command tailored to your project that:
+4. **Generates `/fix` Command**: Creates a custom `/fix` command tailored to your project that:
    - Runs all your linting and typechecking tools
    - Parses errors and groups them by domain (types, lint, formatting)
    - Spawns parallel agents to fix all issues simultaneously
@@ -35,13 +35,13 @@ The `/setup` command intelligently detects your project type and configures auto
 ### Usage
 
 ```bash
-/setup
+/setup-code-quality
 ```
 
 After running setup, use the generated command:
 
 ```bash
-/check
+/fix
 ```
 
 This will automatically fix all linting and type errors in your project using parallel agents!

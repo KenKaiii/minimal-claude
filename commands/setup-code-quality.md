@@ -1,5 +1,5 @@
 ---
-name: setup
+name: setup-code-quality
 description: Detect project tools and generate a /check command for linting and typechecking
 ---
 
@@ -73,13 +73,13 @@ rustup component add clippy rustfmt
 
 **IMPORTANT**: Always check if tools exist first. Only install if missing.
 
-## Step 4: Generate /check Command
+## Step 4: Generate /fix Command
 
-Create a file at `.claude/commands/check.md` with the following structure:
+Create a file at `.claude/commands/fix.md` with the following structure:
 
 ```markdown
 ---
-name: check
+name: fix
 description: Run typechecking and linting, then spawn parallel agents to fix all issues
 ---
 
@@ -154,15 +154,15 @@ cargo fmt -- --check
 
 ## Step 5: Confirm Completion
 
-After generating the `/check` command, inform the user:
+After generating the `/fix` command, inform the user:
 1. What project type was detected
 2. Which tools were already present
 3. Which tools were installed (if any)
-4. That the `/check` command has been created at `.claude/commands/check.md`
-5. How to use it: "Run `/check` to lint, typecheck, and auto-fix all issues"
+4. That the `/fix` command has been created at `.claude/commands/fix.md`
+5. How to use it: "Run `/fix` to lint, typecheck, and auto-fix all issues"
 
 **Important Notes**:
 - Always create the `.claude/commands/` directory if it doesn't exist
 - Ensure the YAML frontmatter includes both `name` and `description`
-- The generated `/check` command must spawn agents in parallel (single response, multiple Task tool calls)
+- The generated `/fix` command must spawn agents in parallel (single response, multiple Task tool calls)
 - Tailor the commands to what's actually available in the project
