@@ -17,18 +17,19 @@ Read the config file to find the exact linting and typechecking commands.
 
 ## Step 2: Extract Commands
 
-**For JavaScript/TypeScript**: Check `package.json` scripts for `lint`, `typecheck`, `type-check`, or `tsc`
+**For JavaScript/TypeScript**: Check `package.json` scripts for `lint`, `typecheck`, `type-check`, or `tsc`, and check if there's a `dev` or `start` script (server)
 
-**For Python**: Look for `mypy`, `pylint`, `black`, `ruff` in dependencies
+**For Python**: Look for `mypy`, `pylint`, `black`, `ruff` in dependencies, and check for server commands (flask, fastapi, django)
 
-**For Go**: Use `go vet ./...`, `gofmt -l .`
+**For Go**: Use `go vet ./...`, `gofmt -l .`, and check for `go run` server commands
 
-**For Rust**: Use `cargo clippy`, `cargo fmt --check`
+**For Rust**: Use `cargo clippy`, `cargo fmt --check`, and check for `cargo run` server commands
 
 ## Step 3: Generate CLAUDE.md
 
 Create `CLAUDE.md` in the project root with this EXACT format:
 
+**If project has NO server:**
 ```markdown
 # Code Quality - Zero Tolerance
 
@@ -41,11 +42,29 @@ After editing ANY file, run:
 Fix ALL errors/warnings before continuing.
 ```
 
-**That's it. Keep it under 10 lines.**
+**If project HAS a server:**
+```markdown
+# Code Quality - Zero Tolerance
+
+After editing ANY file, run:
+
+```bash
+[EXACT COMMANDS FROM PROJECT]
+```
+
+Fix ALL errors/warnings before continuing.
+
+If changes require server restart (not hot-reloadable):
+1. Restart server
+2. Read server output/logs
+3. Fix ALL warnings/errors before continuing
+```
+
+**Keep it minimal (under 15 lines).**
 
 ### Examples:
 
-**JavaScript/TypeScript**:
+**JavaScript/TypeScript (with server)**:
 ```markdown
 # Code Quality - Zero Tolerance
 
@@ -57,6 +76,11 @@ npm run typecheck
 ```
 
 Fix ALL errors/warnings before continuing.
+
+If changes require server restart (not hot-reloadable):
+1. Restart server
+2. Read server output/logs
+3. Fix ALL warnings/errors before continuing
 ```
 
 **Python**:
