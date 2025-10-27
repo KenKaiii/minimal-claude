@@ -1,45 +1,86 @@
 ---
 name: setup-claude-md
-description: Generate a minimal CLAUDE.md with project-specific code quality guidelines
+description: Generate or update a minimal CLAUDE.md with project guidelines and structure
 ---
 
-Generate a minimal CLAUDE.md file that enforces zero-tolerance code quality.
+Generate or update a minimal CLAUDE.md with project structure, guidelines, and quality checks.
 
-## Step 1: Detect Project Type
+## Step 1: Check if CLAUDE.md Exists
 
-Check for config files to determine project type:
-- `package.json` → JavaScript/TypeScript
+If `CLAUDE.md` exists:
+- Read the existing file
+- Preserve custom sections the user may have added
+- Update the structure, quality checks, and organization rules
+
+If `CLAUDE.md` does NOT exist:
+- Create a new one from scratch
+
+## Step 2: Analyze Project (Use Explore Agents in Parallel)
+
+Spawn parallel Explore agents to understand the codebase:
+
+1. **Project Purpose Agent**: Analyze README, package.json description, main files to understand what the project does
+2. **Directory Structure Agent**: Map out the folder structure and what each folder contains
+3. **Tech Stack Agent**: Identify languages, frameworks, tools, dependencies
+
+Wait for all agents to complete, then synthesize the information.
+
+## Step 3: Detect Project Type & Commands
+
+Check for config files:
+- `package.json` → JavaScript/TypeScript (extract lint, typecheck, server scripts)
 - `pyproject.toml` or `requirements.txt` → Python
 - `go.mod` → Go
 - `Cargo.toml` → Rust
 
-Read the config file to find the exact linting and typechecking commands.
+Extract:
+- Linting commands
+- Typechecking commands
+- Server start command (if applicable)
 
-## Step 2: Extract Commands and Detect Server
+## Step 4: Generate Project Tree
 
-**For JavaScript/TypeScript**:
-- Check `package.json` scripts for `lint`, `typecheck`, `type-check`, or `tsc`
-- Check for server script: `dev`, `start`, `serve` → Use exact command like `npm run dev`
+Create a concise tree structure showing key directories and files with brief descriptions.
 
-**For Python**:
-- Look for `mypy`, `pylint`, `black`, `ruff` in dependencies
-- Check for server: `uvicorn`, `flask run`, `python manage.py runserver` → Use exact command
+Example format:
+```
+src/
+  ├── api/          # API endpoints and routes
+  ├── components/   # Reusable UI components
+  ├── utils/        # Helper functions and utilities
+  ├── types/        # TypeScript type definitions
+  └── main.ts       # Application entry point
+```
 
-**For Go**:
-- Use `go vet ./...`, `gofmt -l .`
-- Check for server: `go run main.go` or `go run .` → Use exact command
+## Step 5: Generate or Update CLAUDE.md
 
-**For Rust**:
-- Use `cargo clippy`, `cargo fmt --check`
-- Check for server: `cargo run` → Use exact command
+Create `CLAUDE.md` with this structure:
 
-## Step 3: Generate CLAUDE.md
-
-Create `CLAUDE.md` in the project root with this EXACT format:
-
-**If project has NO server:**
 ```markdown
-# Code Quality - Zero Tolerance
+# [Project Name]
+
+[Brief 1-2 sentence description of what this project does]
+
+## Project Structure
+
+[INSERT TREE HERE]
+
+## Organization Rules
+
+**Keep code organized and modularized:**
+- API routes → `/api` folder, one file per route/resource
+- Components → `/components`, one component per file
+- Utilities → `/utils`, grouped by functionality
+- Types/Interfaces → `/types` or co-located with usage
+- Tests → Next to the code they test or in `/tests`
+
+**Modularity principles:**
+- Single responsibility per file
+- Clear, descriptive file names
+- Group related functionality together
+- Avoid monolithic files
+
+## Code Quality - Zero Tolerance
 
 After editing ANY file, run:
 
@@ -48,96 +89,28 @@ After editing ANY file, run:
 ```
 
 Fix ALL errors/warnings before continuing.
-```
 
-**If project HAS a server:**
-```markdown
-# Code Quality - Zero Tolerance
-
-After editing ANY file, run:
-
-```bash
-[EXACT COMMANDS FROM PROJECT]
-```
-
-Fix ALL errors/warnings before continuing.
-
+[IF SERVER EXISTS:]
 If changes require server restart (not hot-reloadable):
-1. Restart server: `[SERVER START COMMAND]`
+1. Restart server: `[SERVER COMMAND]`
 2. Read server output/logs
 3. Fix ALL warnings/errors before continuing
 ```
 
-**Keep it minimal (under 15 lines).**
+**Keep total file under 100 lines.**
 
-### Examples:
+## Step 6: Preserve Custom Sections
 
-**JavaScript/TypeScript (with server)**:
-```markdown
-# Code Quality - Zero Tolerance
+If updating an existing CLAUDE.md:
+- Keep any custom sections the user added
+- Update the generated sections (Project Structure, Quality Checks)
+- Merge carefully without losing user content
 
-After editing ANY file, run:
-
-```bash
-npm run lint
-npm run typecheck
-```
-
-Fix ALL errors/warnings before continuing.
-
-If changes require server restart (not hot-reloadable):
-1. Restart server: `npm run dev`
-2. Read server output/logs
-3. Fix ALL warnings/errors before continuing
-```
-
-**Python**:
-```markdown
-# Code Quality - Zero Tolerance
-
-After editing ANY file, run:
-
-```bash
-mypy .
-pylint src/
-```
-
-Fix ALL errors/warnings before continuing.
-```
-
-**Go**:
-```markdown
-# Code Quality - Zero Tolerance
-
-After editing ANY file, run:
-
-```bash
-go vet ./...
-gofmt -l .
-```
-
-Fix ALL errors/warnings before continuing.
-```
-
-**Rust**:
-```markdown
-# Code Quality - Zero Tolerance
-
-After editing ANY file, run:
-
-```bash
-cargo clippy
-cargo fmt --check
-```
-
-Fix ALL errors/warnings before continuing.
-```
-
-## Step 4: Confirm
+## Step 7: Confirm Completion
 
 Tell the user:
-- ✅ CLAUDE.md created
-- 📋 Commands: [list them]
-- 🎯 Zero-tolerance active
-
-**Keep it minimal. No fluff. Just the essential enforcement.**
+- ✅ CLAUDE.md [created/updated]
+- 📋 Project: [brief description]
+- 🗂️ Structure mapped with [X] directories
+- 📐 Organization rules enforced
+- 🎯 Zero-tolerance quality checks active
