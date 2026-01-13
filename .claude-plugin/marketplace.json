@@ -8,7 +8,7 @@
     {
       "name": "minimal-claude",
       "description": "Auto-configure code quality tools and generate custom /fix command for parallel agent-based fixing",
-      "version": "1.4.1",
+      "version": "1.4.2",
       "author": {
         "name": "kenkai"
       },
