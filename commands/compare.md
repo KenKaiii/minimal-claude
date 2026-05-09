@@ -1,11 +1,11 @@
 ---
 name: compare
-description: Compare code you just created against real-world code samples via Grep MCP to verify best practices and completeness
+description: Compare code you just created against real-world code samples via kencode-search MCP to verify best practices and completeness
 ---
 
-Compare the code you just created or modified in this conversation against real-world implementations using the `mcp__grep__searchGitHub` tool.
+Compare the code you just created or modified in this conversation against real-world implementations using the `mcp__kencode-search__searchCode` tool.
 
-You already know what you just built. For each file you created or modified, use `mcp__grep__searchGitHub` to search for how real projects implement the same patterns. Look at the specific APIs, hooks, functions, and architecture you used.
+You already know what you just built. For each file you created or modified, use `mcp__kencode-search__searchCode` to search for how real projects implement the same patterns. Look at the specific APIs, hooks, functions, and architecture you used. Use `peek: true` first for cheap triage, then drill in with full context. Filter with `language`, `repo` ("owner/name"), or `path` to narrow noisy results.
 
 If you find something consistently done differently across real codebases, or something commonly included that you left out, report it:
 
@@ -13,9 +13,9 @@ If you find something consistently done differently across real codebases, or so
 [MISSING/DIVERGENT/INCOMPLETE] file:line - What it is
 Wrote: What was implemented
 Real-world: What real projects do instead/additionally
-Evidence: Grep MCP - pattern seen in X out of Y repos searched
+Evidence: kencode-search MCP - pattern seen in X out of Y repos searched
 ```
 
-Style preferences and subjective improvements are not valid findings. Only report things backed by clear Grep MCP evidence across multiple repos.
+Style preferences and subjective improvements are not valid findings. Only report things backed by clear kencode-search MCP evidence across multiple repos.
 
 If the code aligns well with real-world patterns, say so. That's a good outcome.
