@@ -2,6 +2,9 @@
 
 A minimal base setup for creating Claude Code plugins with an intelligent `/setup` command that automatically configures project linting and typechecking.
 
+> [!TIP]
+> **Want to build your own apps with AI?** A free 7-day build challenge and 20+ step-by-step projects are in my free community: **[skool.com/raid](https://www.skool.com/raid)**
+
 ## Structure
 
 ```
